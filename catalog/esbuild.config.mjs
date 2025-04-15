@@ -31,7 +31,10 @@ const tsEntrypoints = [
 const filesPromises = tsEntrypoints.map(async (entry) => tinyGlob(entry));
 const entryPoints = (await Promise.all(filesPromises)).flat();
 
-// Shared esbuild config values
+/**
+ * Shared esbuild config values
+ * @type {esbuild.BuildOptions}
+ */
 let config = {
   bundle: true,
   outdir: jsFolder,
@@ -63,6 +66,7 @@ if (DEV) {
     bundle: true,
     outdir: jsFolder,
     minify: true,
+    external: ['node:*'],
     format: 'esm',
     treeShaking: true,
     legalComments: 'external',
